@@ -1,0 +1,236 @@
+/* 💗 Propuesta para Jennifer · versión galaxia mágica */
+:root {
+  color-scheme: dark;
+  --white: #fff9fc;
+  --pink: #ff4caa;
+  --rose: #ff83c6;
+  --violet: #a679ff;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #100510; color: var(--white); font-family: 'Trebuchet MS', 'Segoe UI', Arial, sans-serif; }
+button,input { font: inherit; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+button:focus-visible, input:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+[hidden] { display: none !important; }
+.app { min-height: 100svh; position: relative; isolation: isolate; overflow: hidden; }
+.scene { position: relative; min-height: 100svh; display: grid; place-items: center; isolation: isolate; padding: 28px 22px calc(30px + env(safe-area-inset-bottom)); overflow: hidden; }
+
+/* =========================================
+   IMAGEN COMPLETA EN COMPUTADORA Y CELULAR
+   Fondo borroso en toda la pantalla + retrato NÍTIDO usando contain.
+   contain evita que se corte la foto, a diferencia de cover.
+   ========================================= */
+.scene-romantic { background: #210b1b; }
+.romantic-art { position: absolute; inset: 0; z-index: -3; overflow: hidden; }
+.romantic-art::before,
+.romantic-art::after { content: ''; position: absolute; inset: 0; pointer-events: none; }
+.romantic-art::before {
+  inset: -38px;
+  background: url('fondo-jennifer.png') center / cover no-repeat;
+  filter: blur(32px) brightness(.46) saturate(1.18);
+  transform: scale(1.09);
+}
+.romantic-art::after {
+  background: url('fondo-jennifer.png') center / contain no-repeat;
+  filter: drop-shadow(0 0 24px #13010c);
+}
+.scene-romantic::after {
+  content:''; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background: linear-gradient(180deg, #09020d26 0%, #1c02181c 55%, #0c001544 100%);
+}
+.sparkles { position:absolute; inset:0; z-index:-2; pointer-events:none;
+  background-image: radial-gradient(2px 2px at 15% 18%, #fff6c5 96%, transparent),radial-gradient(2px 2px at 86% 26%, #ffe0f4 96%, transparent),radial-gradient(3px 3px at 78% 10%, #fff9cc 96%, transparent),radial-gradient(2px 2px at 26% 79%, #ffe5f9 96%, transparent);
+  animation:twinkle 4s ease-in-out infinite alternate;
+}
+.scene-content { position:relative; z-index:1; width:min(100%, 475px); text-align:center; animation:come-in .7s ease both; }
+.eyebrow { display:inline-block; margin:0 0 18px; padding:9px 15px; border:1px solid #ffd7e886; border-radius:999px; background:#311126a8; backdrop-filter:blur(9px); color:#ffe5f3; font-size:.82rem; font-weight:700; letter-spacing:.045em; }
+.name { font:italic clamp(1.6rem, 5.2vw, 2.4rem) Georgia,serif; margin:0 0 8px; color:#ffd2e9; text-shadow:0 3px 15px #160310; }
+h1,h2 { text-wrap:balance; text-shadow:0 4px 25px #11030de0,0 0 20px #b329679e; }
+h1 { margin:0; font-size:clamp(2.55rem, 9vw, 4.1rem); line-height:1.13; letter-spacing:-.035em; }
+h2 { margin:9px 0 16px; font-size:clamp(2.4rem, 8.5vw, 3.8rem); line-height:1.13; letter-spacing:-.03em; }
+.heart-emoji { display:inline-block; filter:drop-shadow(0 0 15px #ff47a0); animation:heart-beat 1.6s ease-in-out infinite; }
+.message { max-width:430px; margin:20px auto 25px; color:#fff0f7; font-size:clamp(.95rem, 3.5vw, 1.1rem); line-height:1.6; text-shadow:0 2px 13px #17000fe0; }
+.button-row { display:flex; gap:12px; justify-content:center; align-items:center; flex-wrap:wrap; }
+.btn { min-width:136px; min-height:52px; padding:14px 22px; border:0; border-radius:999px; font-size:1rem; font-weight:800; transition:transform .19s, box-shadow .19s, background-color .19s; }
+.btn:hover { transform:translateY(-2px) scale(1.025); }
+.btn:active { transform:scale(.97); }
+.btn-primary,.btn-gift { color:#fff; background:linear-gradient(113deg,#f50988,#ff7bd0); box-shadow:0 5px 26px #ff1da07d,inset 0 1px 0 #fffc; }
+.btn-secondary { color:#fff; background:#ff7ab04a; border:1px solid #ffd2ecb2; backdrop-filter:blur(6px); }
+#btn-no { touch-action:none; }
+#btn-no.se-escapa { position:fixed; z-index:12; margin:0; transition:left .16s ease-out, top .16s ease-out, box-shadow .2s; }
+.btn-gift { margin-top:10px; min-width:238px; }
+.small-note { margin:18px 0 0; font-size:.8rem; color:#ffedfacb; text-shadow:0 2px 10px #16030b; }
+.big-heart { display:block; font-size:4.3rem; filter:drop-shadow(0 0 22px #ff509d); animation:heart-beat 1.8s infinite; }
+.heart-burst { position:fixed; inset:0; overflow:hidden; z-index:30; pointer-events:none; }
+.burst-heart { position:absolute; left:var(--left); bottom:-48px; font-size:var(--size); animation:float-heart var(--duration) ease-out forwards; filter:drop-shadow(0 0 9px #ff4c91); }
+
+/* En pantallas grandes el retrato permanece ENTERO a la izquierda.
+   La tarjeta de texto va a la derecha para no tapar a las chicas. */
+@media (min-width:900px) and (orientation:landscape) {
+  .scene-romantic { justify-items:end; padding-right:clamp(36px,6vw,128px); }
+  .romantic-art::after { background-position:29% center; }
+  .scene-content { width:min(420px, 37vw); padding:29px 25px 31px; background:linear-gradient(135deg,#1d0721d9,#330b28b8); border:1px solid #ffbfd578; border-radius:30px; backdrop-filter:blur(15px); box-shadow:0 20px 75px #090008a3, 0 0 35px #e9438040; }
+  h1 { font-size:clamp(2.4rem,4.2vw,3.6rem); }
+  h2 { font-size:clamp(2.2rem,4vw,3.3rem); }
+}
+/* En teléfono, el retrato también se muestra entero y el texto
+   se coloca arriba, dejando visibles las siluetas inferiores. */
+@media (max-width:899px), (orientation:portrait) {
+  .scene-romantic { align-items:start; padding-top:clamp(22px,4svh,46px); }
+  .scene-content { width:min(100%,450px); padding:20px 13px 24px; border:1px solid #ffe3f24d; border-radius:26px; background:linear-gradient(180deg,#22081cbd,#21081991 81%,#1a071b24); backdrop-filter:blur(5px); box-shadow:0 12px 38px #12020e5a; }
+  .romantic-art::after { background-position:center center; }
+}
+
+/* =========================================
+   GALAXIA DE ENSUEÑO ✨
+   Capas: nebulosas, partículas canvas, órbitas, planeta y palabras
+   ========================================= */
+.scene-galaxy { overflow:hidden; padding:0; background:
+  radial-gradient(ellipse at 51% 54%, #a64038 0%, #65214b 21%, #321539 42%, #10071f 68%, #050510 100%);
+}
+.scene-galaxy::before { content:''; position:absolute; inset:0; pointer-events:none; z-index:0;
+  background:radial-gradient(ellipse at 15% 36%,#e236b933,transparent 44%),radial-gradient(ellipse at 83% 60%,#6164ff42,transparent 45%),radial-gradient(ellipse at 50% 58%,#ff9b534e,transparent 42%);
+}
+.galaxy-nebula { position:absolute; inset:-24%; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 28% 23% at 34% 42%, #fb3fce6e, transparent 80%),
+    radial-gradient(ellipse 27% 20% at 68% 63%, #5e72e895, transparent 85%),
+    radial-gradient(ellipse 29% 22% at 53% 55%, #fb6e667d, transparent 80%),
+    radial-gradient(ellipse 20% 18% at 31% 71%, #df64874d, transparent 90%),
+    radial-gradient(ellipse 18% 17% at 75% 32%, #864dfd6b, transparent 90%);
+  filter:blur(28px) saturate(1.35); animation:nebula-drift 32s ease-in-out infinite alternate;
+}
+.cosmos-canvas { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1; mix-blend-mode:screen; }
+.space-glow { position:absolute; z-index:1; width:min(78vmin, 670px); aspect-ratio:1; left:50%; top:55%; transform:translate(-50%,-50%); border-radius:50%; pointer-events:none;
+  background:radial-gradient(circle,#ffb7648b 0%,#ff598d57 19%,#d83bf026 41%,transparent 75%);
+  filter:blur(13px); animation:glow-breathe 7s ease-in-out infinite alternate;
+}
+.space-stars,.word-universe { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+.space-stars { z-index:1; }
+.space-star { position:absolute; width:var(--s); height:var(--s); border-radius:50%; background:var(--color,#fff5fa); box-shadow:0 0 8px #ffceebca, 0 0 18px #fc63e14d; opacity:.8; animation:twinkle var(--t) ease-in-out infinite alternate; }
+.orbit { position:absolute; z-index:2; pointer-events:none; left:50%; top:55%; width:min(85vmin,740px); height:min(32vmin,245px); transform:translate(-50%,-50%) rotate(-23deg); border:2px solid #ffbfd35f; border-radius:50%; box-shadow:0 0 20px #ff51b14f, inset 0 0 16px #b88dff42; animation:orbit-sway 13s ease-in-out infinite alternate; }
+.orbit-one::after { content:''; position:absolute; width:11px; height:11px; border-radius:50%; left:14%; top:8%; background:#fffbe7; box-shadow:0 0 12px 5px #ffaee9b3, 0 0 29px 9px #ad87ffb3; }
+.orbit-two { width:min(63vmin,580px); height:min(42vmin,320px); border-color:#a992ff60; border-width:1px; transform:translate(-50%,-50%) rotate(38deg); box-shadow:0 0 15px #ac83ff50,inset 0 0 11px #ffa1ef3b; animation:orbit-sway-two 17s ease-in-out infinite alternate; }
+.eclipse { position:absolute; z-index:3; left:50%; top:55%; width:clamp(95px,15vmin,150px); aspect-ratio:1; border-radius:50%; display:grid; place-items:center; transform:translate(-50%,-50%);
+  background:radial-gradient(circle at 30% 25%, #442047 0%,#190f2a 46%,#060611 83%);
+  border:1px solid #ffc6d360;
+  box-shadow:0 0 16px 4px #fff7edab,0 0 42px 11px #ff83898c, 0 0 95px 41px #ff527d66,0 0 140px 75px #8b44ec29,inset -10px -9px 32px #000c;
+  animation:planet-pulse 6.5s ease-in-out infinite alternate;
+}
+.planet-heart { font-size:clamp(2.2rem,5vmin,3.6rem); filter:drop-shadow(0 0 15px #ff8ac5); animation:heart-beat 2.4s ease-in-out infinite; }
+.word-universe { z-index:4; }
+.galaxy-word { position:absolute; top:var(--top); left:var(--left); display:block; white-space:nowrap; text-align:center;
+  transform:translate(-50%,-50%); font-size:var(--size); font-weight:800; line-height:1.15; letter-spacing:.005em;
+  opacity:var(--opacity); color:var(--color,#fff9fc); text-shadow:0 2px 9px #100116, 0 0 12px #ff9edba6;
+  animation:word-drift var(--duration) ease-in-out infinite alternate; animation-delay:var(--delay);
+}
+.galaxy-word.featured { font-family:Georgia,serif; font-style:italic; color:#fff6df; text-shadow:0 1px 12px #fff0e46e,0 0 18px #ff56a47a; }
+.galaxy-message { position:absolute; top:clamp(42px,7.4svh,85px); left:14px; right:14px; text-align:center; z-index:5; pointer-events:none; }
+.galaxy-message .eyebrow { margin-bottom:2px; background:#1d1135b3; border-color:#ffd9ef6f; box-shadow:0 0 19px #b866fa42; }
+.galaxy-message h2 { margin:11px auto 5px; font:700 clamp(2.1rem,5vw,3.6rem)/1.08 Georgia,'Times New Roman',serif; color:#fff7fd; }
+.galaxy-message > p:last-child { margin:10px 0 0; font-size:clamp(.88rem,2vw,1.07rem); color:#ffe7f4; font-weight:700; text-shadow:0 2px 14px #11000f; }
+.galaxy-bottom { position:absolute; left:0; right:0; bottom:calc(16px + env(safe-area-inset-bottom)); z-index:6; display:grid; justify-items:center; gap:12px; padding:0 16px; }
+.music-player { display:flex; align-items:center; gap:12px; width:min(100%,485px); min-height:76px; padding:11px 14px; border-radius:25px; background:#160c2add; border:1px solid #ffe3f394; backdrop-filter:blur(18px); box-shadow:0 12px 48px #09001dbb,0 0 25px #f341ad62,inset 0 1px 0 #fff6; }
+.play-button { flex:0 0 auto; display:grid; place-items:center; width:46px; height:46px; border:0; border-radius:50%; color:#fff; background:linear-gradient(135deg,#f41092,#fa76cf); font-size:1.1rem; box-shadow:0 0 20px #fa63b48a; }
+.music-info { flex:1; min-width:0; }
+.music-name { font-size:.79rem; font-weight:800; margin-bottom:8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+#progreso { width:100%; display:block; margin:0; height:5px; border-radius:99px; cursor:pointer; accent-color:#ff5abb; }
+.music-time { flex:0 0 auto; white-space:nowrap; font-size:.71rem; color:#ffe9f8; font-variant-numeric:tabular-nums; }
+.music-status { margin:6px 0 0; font-size:.69rem; color:#ffe3ef; overflow-wrap:anywhere; }
+.music-status:empty { display:none; }
+.restart-button { padding:9px 17px; border:1px solid #ffc8ec42; border-radius:999px; color:#ffebf9; font-size:.8rem; background:#291434bd; backdrop-filter:blur(7px); }
+.restart-button:hover { background:#492558; }
+
+/* Teléfonos pequeños: contenidos compactos y palabras bien repartidas. */
+@media (max-width:430px) {
+  .scene-romantic { padding-inline:12px; }
+  .scene-content { padding:15px 10px 19px; }
+  .eyebrow { margin-bottom:10px; padding:7px 11px; font-size:.72rem; }
+  .name { font-size:1.6rem; }
+  h1 { font-size:clamp(2.25rem,10vw,3.15rem); }
+  h2 { font-size:clamp(2.15rem,9vw,2.8rem); }
+  .message { margin:13px auto 18px; line-height:1.46; font-size:.93rem; }
+  .btn { min-width:120px; padding:12px 18px; min-height:48px; font-size:.95rem; }
+  .small-note { margin-top:12px; font-size:.73rem; }
+  .galaxy-message { top:clamp(22px,5svh,55px); }
+  .galaxy-message h2 { font-size:clamp(2rem,8.8vw,2.65rem); }
+  .galaxy-bottom { bottom:calc(8px + env(safe-area-inset-bottom)); gap:8px; padding:0 11px; }
+  .music-player { gap:8px; padding:10px; border-radius:19px; }
+  .play-button { width:43px; height:43px; }
+  .music-time { font-size:.62rem; }
+  .orbit { width:104vw; height:38vw; }
+  .orbit-two { width:79vw; height:52vw; }
+}
+@media (max-width:375px) {
+  .music-time { display:none; }
+}
+@media (max-height:690px) {
+  .scene-romantic { padding-top:9px; }
+  .scene-content { padding-block:12px; }
+  .scene-content .message { margin-block:9px 13px; }
+  .scene-content .eyebrow { margin-bottom:8px; }
+  .scene-content .small-note { margin-top:10px; }
+  .galaxy-message { top:15px; }
+  .galaxy-message h2 { font-size:clamp(1.65rem,5vw,2.5rem); }
+  .galaxy-bottom { bottom:6px; gap:5px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; }
+}
+@keyframes come-in { from { opacity:0; transform:translateY(24px) scale(.97); } to { opacity:1; transform:translateY(0) scale(1); } }
+@keyframes heart-beat { 0%,100% { transform:scale(1); } 18% { transform:scale(1.12); } 33% { transform:scale(1); } 49% { transform:scale(1.07); } }
+@keyframes twinkle { from { opacity:.2; } to { opacity:1; } }
+@keyframes nebula-drift { from { transform:rotate(-6deg) scale(.98); } to { transform:rotate(7deg) scale(1.12); } }
+@keyframes glow-breathe { from { transform:translate(-50%,-50%) scale(.9); opacity:.75; } to { transform:translate(-50%,-50%) scale(1.2); opacity:1; } }
+@keyframes orbit-sway { from { transform:translate(-50%,-50%) rotate(-25deg) scale(.97); } to { transform:translate(-50%,-50%) rotate(-14deg) scale(1.06); } }
+@keyframes orbit-sway-two { from { transform:translate(-50%,-50%) rotate(35deg); } to { transform:translate(-50%,-50%) rotate(48deg); } }
+@keyframes planet-pulse { from { box-shadow:0 0 14px 4px #ffe6ce96,0 0 42px 12px #ff83897a,0 0 95px 40px #ff527d44,inset -10px -9px 32px #000c; } to { box-shadow:0 0 25px 6px #fff2eac4,0 0 70px 20px #ff9ca3a6,0 0 120px 55px #e95bc177,inset -10px -9px 32px #000c; } }
+@keyframes word-drift { from { transform:translate(-50%, -50%) translate3d(-7px,-10px,0) scale(.98); } to { transform:translate(-50%, -50%) translate3d(9px,12px,0) scale(1.035); } }
+@keyframes float-heart { 0% { transform:translate3d(0,0,0) rotate(-16deg); opacity:0; } 12% { opacity:1; } 100% { transform:translate3d(var(--drift), -115vh,0) rotate(24deg); opacity:0; } }
+
+/* 💗 Acercar el contenedor a la imagen */
+
+@media (min-width: 1150px) and (orientation: landscape) {
+
+    .scene-romantic .scene-content {
+        left: clamp(-105px, calc(400px - 35vw), 0px);
+    }
+
+}
+
+/* ❤️ FRASE ESPECIAL: TE AMO ❤️ */
+
+.galaxy-word.te-amo {
+    color: #ff69b4;
+    font-size: clamp(18px, 3vw, 30px);
+    font-weight: 900;
+    font-family: 'Arial', sans-serif;
+    font-style: normal;
+    opacity: 1;
+
+    /* Brillo romántico */
+    text-shadow:
+        0 0 10px #ff1493,
+        0 0 20px #ff69b4,
+        0 0 35px #ff0080,
+        0 0 50px #ff1493;
+
+    /* Movimiento flotante + latidos */
+    animation:
+        word-drift var(--duration) ease-in-out
+        var(--delay) infinite alternate,
+        latidoTeAmo 1.5s ease-in-out infinite;
+}
+
+/* 💓 Animación de latido */
+@keyframes latidoTeAmo {
+
+    0%, 100% {
+        scale: 1;
+    }
+
+    50% {
+        scale: 1.20;
+    }
+}
